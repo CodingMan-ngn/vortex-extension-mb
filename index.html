@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VORTEX Download</title>
+    <link rel="icon" type="image/png" href="logo.png">  <!-- Favicon -->
+    <style>
+        :root {
+            --bg-deep: #030712;
+            --accent-blue: #38bdf8;
+            --accent-purple: #818cf8;
+            --accent-indigo: #6366f1;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --glass-bg: rgba(15, 23, 42, 0.7);
+            --glass-border: rgba(56, 189, 248, 0.25);
+            --glass-glow: rgba(56, 189, 248, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated ambient background */
+        body::before, body::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.4;
+            z-index: 0;
+            animation: pulseGlow 12s ease-in-out infinite alternate;
+        }
+
+        body::before {
+            background: #1e1b4b;
+            top: 0;
+            left: 0;
+        }
+
+        body::after {
+            background: #0284c7;
+            bottom: 0;
+            right: 0;
+            animation-delay: -6s;
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(1) translate(0, 0); opacity: 0.3; }
+            100% { transform: scale(1.3) translate(30px, -30px); opacity: 0.6; }
+        }
+
+        /* Stars effect */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.6), transparent),
+                        radial-gradient(1px 1px at 40% 70%, rgba(255,255,255,0.5), transparent),
+                        radial-gradient(1px 1px at 60% 20%, rgba(255,255,255,0.4), transparent),
+                        radial-gradient(1px 1px at 80% 60%, rgba(255,255,255,0.6), transparent),
+                        radial-gradient(1px 1px at 10% 80%, rgba(255,255,255,0.5), transparent);
+            animation: twinkle 5s ease-in-out infinite alternate;
+        }
+
+        @keyframes twinkle {
+            from { opacity: 0.4; }
+            to { opacity: 1; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 48px 32px;
+            max-width: 440px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7),
+                        inset 0 1px 0 rgba(255,255,255,0.1),
+                        0 0 40px var(--glass-glow);
+            animation: popIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.94) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        h1 {
+            background: linear-gradient(135deg, #38bdf8, #a5b4fc, #c084fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.6rem;
+            font-weight: 800;
+            margin-bottom: 6px;
+            letter-spacing: 3px;
+            text-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
+        }
+
+        p {
+            color: var(--text-sub);
+            font-size: 0.95rem;
+            margin-bottom: 28px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 16px;
+            margin: 14px 0;
+            border: 1px solid transparent;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-download {
+            background: linear-gradient(135deg, #0284c7, #38bdf8);
+            color: #fff;
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 4px 20px rgba(2, 132, 199, 0.35);
+        }
+
+        .btn-download:hover {
+            box-shadow: 0 8px 25px rgba(56, 189, 248, 0.5);
+        }
+
+        .btn-discord {
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            color: #fff;
+            border-color: rgba(99, 102, 241, 0.4);
+            box-shadow: 0 4px 20px rgba(79, 70, 229, 0.35);
+        }
+
+        .btn-home {
+            background: rgba(255,255,255,0.08);
+            color: var(--text-main);
+            border-color: rgba(255,255,255,0.15);
+            font-weight: 500;
+            font-size: 0.85rem;
+            margin-top: 8px;
+        }
+
+        .btn-home:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        /* Step Card */
+        .steps {
+            text-align: left;
+            background: rgba(3, 7, 18, 0.5);
+            border-radius: 18px;
+            padding: 22px;
+            margin-top: 28px;
+            border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+        }
+
+        .steps::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 20px;
+            bottom: 20px;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--accent-blue), var(--accent-purple));
+            border-radius: 0 4px 4px 0;
+        }
+
+        .steps h3 {
+            color: var(--accent-blue);
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .steps ol {
+            margin-left: 20px;
+            color: #cbd5e1;
+            line-height: 1.8;
+            font-size: 0.88rem;
+        }
+
+        .steps li::marker {
+            color: var(--accent-purple);
+            font-weight: 600;
+        }
+
+        code {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent-blue);
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.85rem;
+        }
+
+        .note {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #f87171;
+            background: rgba(239, 68, 68, 0.1);
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            display: inline-block;
+        }
+
+        /* Anti-inspect overlay */
+        #devWarn {
+            position: fixed;
+            inset: 0;
+            background: rgba(3, 7, 18, 0.96);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            text-align: center;
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        #devWarn small {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-top: 8px;
+            font-weight: 400;
+        }
+
+        #devWarn.show {
+            display: flex;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 32px 20px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stars"></div>
+
+    <div class="container">
+        <h1>VORTEX</h1>
+        <p>Download the latest extension</p>
+
+        <a href="https://raw.githubusercontent.com/CodingMan-ngn/vortex-extension/main/VX%20(2).zip" class="btn btn-download" download>⬇️ Download ZIP</a>
+        <a href="https://discord.gg/AABUzpzdU5" class="btn btn-discord" target="_blank">💬 Join Discord</a>
+        <a href="https://codingman-ngn.github.io/Vortex/" class="btn btn-home">🏠 Visit Homepage</a>
+
+        <div class="steps">
+            <h3>📲 How to install on Android</h3>
+            <ol>
+                <li>Tap "Download ZIP".</li>
+                <li>Open a file manager (e.g., ZArchiver).</li>
+                <li>Extract the ZIP to a folder.</li>
+                <li>Open Kiwi Browser → <code>kiwi://extensions</code>.</li>
+                <li>Enable Developer mode → "Load unpacked".</li>
+                <li>Select the folder → Done!</li>
+            </ol>
+        </div>
+
+        <p class="note">⚠️ For iOS: This extension does not work on iOS.</p>
+    </div>
+
+    <!-- Anti-inspect overlay -->
+    <div id="devWarn">
+        🔒 Access Denied
+        <small>Developer tools are disabled.</small>
+    </div>
+
+    <script>
+        // Block right-click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+
+        // Block common inspect shortcuts
+        document.addEventListener('keydown', function(e) {
+            const key = e.key.toUpperCase();
+            const ctrl = e.ctrlKey || e.metaKey;
+
+            if (key === 'F12') {
+                e.preventDefault();
+                showWarn();
+                return;
+            }
+
+            if (ctrl && (key === 'U')) {
+                e.preventDefault();
+                showWarn();
+                return;
+            }
+
+            if (ctrl && e.shiftKey && (key === 'I' || key === 'J' || key === 'C' || key === 'K')) {
+                e.preventDefault();
+                showWarn();
+                return;
+            }
+
+            if (e.metaKey && e.altKey && (key === 'I' || key === 'J' || key === 'C')) {
+                e.preventDefault();
+                showWarn();
+                return;
+            }
+        });
+
+        // DevTools warn overlay trigger
+        let warned = false;
+        function showWarn() {
+            if (!warned) {
+                document.getElementById('devWarn').classList.add('show');
+                warned = true;
+                setTimeout(() => {
+                    document.getElementById('devWarn').classList.remove('show');
+                    warned = false;
+                }, 3000);
+            }
+        }
+    </script>
+</body>
+</html>
